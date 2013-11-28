@@ -1,6 +1,6 @@
 import util.setProperty as setProperty;
 
-var onWhisperSyncUpdate;
+var onSyncUpdate;
 
 function pluginSend(evt, params) {
 	NATIVE && NATIVE.plugins && NATIVE.plugins.sendEvent &&
@@ -16,19 +16,19 @@ function pluginOn(evt, next) {
 var Gameplay = Class(function () {
 	this.init = function(opts) {
 		logger.log("{gameplay} Registering for events on startup");
-		setProperty(this, "onWhisperSyncUpdate", {
+		setProperty(this, "onSyncUpdate", {
 			set: function(f) {
 				//logger.log("Am seting it");
 				// If a callback is being set,
 				if (typeof f === "function") {
-					onWhisperSyncUpdate = f;
+					onSyncUpdate = f;
 				} else {
-					onWhisperSyncUpdate = null;
+					onSyncUpdate = null;
 				}
 			},
 			get: function() {
 				//logger.log("Am getting it");
-				return onWhisperSyncUpdate;
+				return onSyncUpdate;
 			}
 		});
 	}
@@ -53,7 +53,7 @@ var Gameplay = Class(function () {
 		return;
 	}
 
-	this.initWhisperSync = function(param_name) {
+	this.initSync = function(param_name) {
 		return;
 	}
 
