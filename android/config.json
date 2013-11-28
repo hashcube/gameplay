@@ -1,0 +1,12 @@
+{
+    "copyFiles": [
+        "GamePlayPlugin.java"
+    ],
+    "libraries": [
+        "BaseGameUtils"
+    ],
+    "jars": [
+    ],
+    "injectionXML": "manifest.xml",
+	"injectionXSL": "manifest.xsl"
+}
