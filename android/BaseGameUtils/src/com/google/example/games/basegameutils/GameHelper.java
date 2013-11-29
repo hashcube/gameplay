@@ -99,7 +99,7 @@ public class GameHelper implements GooglePlayServicesClient.ConnectionCallbacks,
     final static int RC_UNUSED = 9002;
 
     // Client objects we manage. If a given client is not enabled, it is null.
-    GamesClient mGamesClient = null;
+    public GamesClient mGamesClient = null;
     PlusClient mPlusClient = null;
     AppStateClient mAppStateClient = null;
 
@@ -607,7 +607,7 @@ public class GameHelper implements GooglePlayServicesClient.ConnectionCallbacks,
      * may show up. At the end of the process, the GameHelperListener's
      * onSignInSucceeded() or onSignInFailed() methods will be called.
      */
-    public void beginUserInitiatedSignIn() {
+    public void beginUserInitiatedSignIn(Context contxt) {
         if (mState == STATE_CONNECTED) {
             // nothing to do
             logWarn("beginUserInitiatedSignIn() called when already connected. " +
@@ -630,7 +630,7 @@ public class GameHelper implements GooglePlayServicesClient.ConnectionCallbacks,
         mAutoSignIn = true;
 
         // Is Google Play services available?
-        int result = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getContext());
+        int result = GooglePlayServicesUtil.isGooglePlayServicesAvailable(contxt);
         debugLog("isGooglePlayServicesAvailable returned " + result);
         if (result != ConnectionResult.SUCCESS) {
             // Google Play services is not available.
@@ -732,7 +732,7 @@ public class GameHelper implements GooglePlayServicesClient.ConnectionCallbacks,
         connectCurrentClient();
     }
 
-    void connectCurrentClient() {
+    public void connectCurrentClient() {
         if (mState == STATE_DISCONNECTED) {
             // we got disconnected during the connection process, so abort
             logWarn("GameHelper got disconnected during connection process. Aborting.");

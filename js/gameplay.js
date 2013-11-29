@@ -13,7 +13,33 @@ function pluginOn(evt, next) {
 		NATIVE.events.registerHandler(evt, next);
 }
 
+function invokeCallbacks(list, clear) {
+	// Pop off the first two arguments and keep the rest
+	var args = Array.prototype.slice.call(arguments);
+	args.shift();
+	args.shift();
+
+	// For each callback,
+	for (var ii = 0; ii < list.length; ++ii) {
+		var next = list[ii];
+
+		// If callback was actually specified,
+		if (next) {
+			// Run it
+			next.apply(null, args);
+		}
+	}
+
+	// If asked to clear the list too,
+	if (clear) {
+		list.length = 0;
+	}
+}
+
 var Gameplay = Class(function () {
+
+	var loginCB = [];
+
 	this.init = function(opts) {
 		logger.log("{gameplay} Registering for events on startup");
 		setProperty(this, "onSyncUpdate", {
@@ -30,6 +56,12 @@ var Gameplay = Class(function () {
 				//logger.log("Am getting it");
 				return onSyncUpdate;
 			}
+		});
+
+		pluginOn("gameplayLogin", function(evt) {
+			logger.log("{gameplay} State updated:", evt.state);
+
+			invokeCallbacks(loginCB, true, evt.state === "open", evt);
 		});
 	}
 
@@ -55,6 +87,20 @@ var Gameplay = Class(function () {
 
 	this.initSync = function(param_name) {
 		return;
+	}
+
+	this.logout = function() {
+		logger.log("{gameplay} Logging Out a user");
+
+		pluginSend("signOut");
+	}
+
+	this.login = function(next) {
+		logger.log("{gameplay} Logging in a user");
+
+		loginCB.push(next);
+
+		pluginSend("beginUserInitiatedSignIn");
 	}
 
 	this.showLeaderBoard = function() {

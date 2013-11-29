@@ -3,6 +3,7 @@ package com.tealeaf.plugin.plugins;
 import com.google.android.gms.appstate.AppStateClient;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.games.GamesClient;
+import com.google.android.gms.games.GamesClient.*;
 import com.google.android.gms.plus.PlusClient;
 import com.google.example.games.basegameutils.*;
 
@@ -14,6 +15,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.*;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +24,9 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.lang.Long;
 import java.lang.Float;
+
+import android.R.id.*;
+
 
 public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 	Context _context;
@@ -45,6 +50,15 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 
     protected String mDebugTag = "BaseGameActivity";
     protected boolean mDebugLog = false;
+
+	public class GPStateEvent extends com.tealeaf.event.Event {
+		String state;
+
+		public GPStateEvent(String state) {
+			super("gameplayLogin");
+			this.state = state;
+		}
+	}
 
     /** Constructs a BaseGameActivity with default client (GamesClient). */
     public GamePlayPlugin() {
@@ -87,7 +101,6 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
             mHelper.enableDebugLog(mDebugLog, mDebugTag);
         }
         mHelper.setup(this, mRequestedClients, mAdditionalScopes);
-
 	}
 
 	public void onResume() {
@@ -101,10 +114,14 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 
 	@Override
 	public void onSignInFailed(){
+		// Sign in has failed. So show the user the sign-in button.
+		EventQueue.pushEvent(new GPStateEvent("close"));
 	}
 
 	@Override
 	public void onSignInSucceeded(){
+		// show sign-out button, hide the sign-in button
+	    EventQueue.pushEvent(new GPStateEvent("open"));
 	}
 
 	public void onStop() {
@@ -147,11 +164,11 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
         return mHelper.isSignedIn();
     }
 
-    protected void beginUserInitiatedSignIn() {
-        mHelper.beginUserInitiatedSignIn();
+    public void beginUserInitiatedSignIn(String dummyParam) {
+        mHelper.beginUserInitiatedSignIn(_context);
     }
 
-    protected void signOut() {
+    public void signOut(String dummyParam) {
         mHelper.signOut();
     }
 
@@ -198,6 +215,9 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 	public void sendAchievement(String param)
 	{
 		logger.log("{gameplay-native} Inside sendAchievement");
+		if(!(mHelper.isSignedIn())){
+			return;
+		}
 	    final Bundle params = new Bundle();
 	    //logger.log(1);
 	    String achievementID = "";
@@ -240,11 +260,17 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 
 	public void showLeaderBoard(String dummyParam)
 	{
+		if(!(mHelper.isSignedIn())){
+			return;
+		}
 		logger.log("{gameplay-native} Inside showLeaderBoard");
 	}
 
 	public void sendScore(String param)
 	{
+		if(!(mHelper.isSignedIn())){
+			return;
+		}
 		logger.log("{gameplay-native} Inside sendScore");
 	    final Bundle params = new Bundle();
 	    String leaderBoardID = "";
@@ -270,7 +296,9 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 		}
 		//logger.log("Sending score");
 		//logger.log("=================");
+		mHelper.mGamesClient.submitScore(leaderBoardID, score);
 		//logger.log(score);
+		//_activity.startActivityForResult(mHelper.mGamesClient.getLeaderboardIntent(leaderBoardID), 777);
 	}
 
 	public void logError(String errorDesc) {
