@@ -256,6 +256,7 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 		//logger.log(achievementID);
 		//logger.log(percentSolved);
 		//logger.log("============");
+		mHelper.mGamesClient.unlockAchievement(achievementID);
 	}
 
 	public void showLeaderBoard(String dummyParam)
