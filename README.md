@@ -1,10 +1,19 @@
-gameplay
-========
+Google Play Game Services plugin for Gameclosure
+=============
 
-Game Play Services for Android - Plguin for Gameclosure
+This is a Gameclosure(www.gameclosure.com) plugin for Google Play Game Services.
+Right now we support only android.
 
-This is a plugin for the Gameclosure Game Development Engine for mobile apps. (www.gameclosure.com)
+Features
+  * Login/Logout
+  * Leaderboard
+  * Achievements
 
-This plugin is for implementing Game Play Services for Android.
+How to Install
+-------------
+clone this repo to '''addons''' folder inside devkit and do following
+```
+$ cd gameplay
+$ android update project -p android/google_play_services_lib/
+```
 
-Currently this allows a person to login, logout, send scores to leaderboard and send achievement completion.
