@@ -96,14 +96,14 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
 		_activity = activity;
-        mHelper = new GameHelper(activity);
+	}
+
+	public void onResume() {
+        mHelper = new GameHelper(_activity);
         if (mDebugLog) {
             mHelper.enableDebugLog(mDebugLog, mDebugTag);
         }
         mHelper.setup(this, mRequestedClients, mAdditionalScopes);
-	}
-
-	public void onResume() {
 	}
 
 	public void onStart() {
