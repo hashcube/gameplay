@@ -96,14 +96,14 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
 		_activity = activity;
-        mHelper = new GameHelper(activity);
+	}
+
+	public void onResume() {
+        mHelper = new GameHelper(_activity);
         if (mDebugLog) {
             mHelper.enableDebugLog(mDebugLog, mDebugTag);
         }
         mHelper.setup(this, mRequestedClients, mAdditionalScopes);
-	}
-
-	public void onResume() {
 	}
 
 	public void onStart() {
@@ -219,43 +219,27 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 			return;
 		}
 	    final Bundle params = new Bundle();
-	    //logger.log(1);
 	    String achievementID = "";
-	    //logger.log(2);
 	    Float percentSolved = 0F;
-	    //logger.log(3);
 	    try {
 	    	JSONObject ldrData = new JSONObject(param);	
-	    	//logger.log(4);
 	        Iterator<?> keys = ldrData.keys();
-	        //logger.log(5);
 	        while( keys.hasNext() ){
-	        	//logger.log(6);
 	            String key = (String)keys.next();
-	            //logger.log(7);
 	    		Object o = ldrData.get(key);
-	    		//logger.log(8);
 	    		if(key.equals("achievementID")){
-	    			//logger.log(9);
 	    			achievementID = (String) o;
 	    			continue;
 	    		}
 	    		if(key.equals("percentSolved")){
-	    			//logger.log(10);
 	    			percentSolved = new Float(o.toString());
 	    			continue;
 	    		}
-	    		//logger.log(11);
 	    		params.putString(key, (String) o);
 	        }
 		} catch(JSONException e) {
 			logger.log("{gameplay-native} Error in Params of sendAchievement because "+ e.getMessage());
 		}
-		//logger.log(12);
-		//logger.log(13);
-		//logger.log(achievementID);
-		//logger.log(percentSolved);
-		//logger.log("============");
 		mHelper.mGamesClient.unlockAchievement(achievementID);
 	}
 
@@ -295,10 +279,7 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 		} catch(JSONException e) {
 			logger.log("{gameplay-native} Error in Params of sendScore because "+ e.getMessage());
 		}
-		//logger.log("Sending score");
-		//logger.log("=================");
 		mHelper.mGamesClient.submitScore(leaderBoardID, score);
-		//logger.log(score);
 		//_activity.startActivityForResult(mHelper.mGamesClient.getLeaderboardIntent(leaderBoardID), 777);
 	}
 
