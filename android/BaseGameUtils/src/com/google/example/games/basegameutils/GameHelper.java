@@ -897,6 +897,8 @@ public class GameHelper implements GooglePlayServicesClient.ConnectionCallbacks,
                 // Try connecting again
                 debugLog("SendIntentException, so connecting again.");
                 connectCurrentClient();
+            } catch (Exception e) {
+                connectCurrentClient();
             }
         } else {
             // It's not a problem what we can solve, so give up and show an
