@@ -248,7 +248,17 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 		if(!(mHelper.isSignedIn())){
 			return;
 		}
-		logger.log("{gameplay-native} Inside showLeaderBoard");
+		//TODO: getlLeaderboardsIndent accepts id as parameter to show
+		//a specific leaderboard.
+		_activity.startActivityForResult(mHelper.mGamesClient.getAllLeaderboardsIntent(), 1);
+	}
+
+	public void showAchievements(String dummyParam)
+	{
+		if(!(mHelper.isSignedIn())){
+			return;
+		}
+		_activity.startActivityForResult(mHelper.mGamesClient.getAchievementsIntent(), 1);
 	}
 
 	public void sendScore(String param)
@@ -280,7 +290,6 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 			logger.log("{gameplay-native} Error in Params of sendScore because "+ e.getMessage());
 		}
 		mHelper.mGamesClient.submitScore(leaderBoardID, score);
-		//_activity.startActivityForResult(mHelper.mGamesClient.getLeaderboardIntent(leaderBoardID), 777);
 	}
 
 	public void logError(String errorDesc) {
