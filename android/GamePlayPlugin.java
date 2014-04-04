@@ -215,6 +215,7 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
   public void sendAchievement(String param)
   {
     if(!(mHelper.isSignedIn())){
+      logger.log("{gameplay-native} not signed in");
       return;
     }
 
@@ -239,15 +240,16 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
         }
         params.putString(key, (String) o);
       }
+      mHelper.mGamesClient.unlockAchievement(achievementID);
     } catch(JSONException e) {
       logger.log("{gameplay-native} Error in Params of sendAchievement because "+ e.getMessage());
     }
-    mHelper.mGamesClient.unlockAchievement(achievementID);
   }
 
   public void showLeaderBoard(String dummyParam)
   {
     if(!(mHelper.isSignedIn())){
+      logger.log("{gameplay-native} not signed in");
       return;
     }
     //TODO: getlLeaderboardsIndent accepts id as parameter to show
@@ -258,6 +260,7 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
   public void showAchievements(String dummyParam)
   {
     if(!(mHelper.isSignedIn())){
+      logger.log("{gameplay-native} not signed in");
       return;
     }
     _activity.startActivityForResult(mHelper.mGamesClient.getAchievementsIntent(), 1);
@@ -266,9 +269,9 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
   public void sendScore(String param)
   {
     if(!(mHelper.isSignedIn())){
+      logger.log("{gameplay-native} not signed in");
       return;
     }
-    logger.log("{gameplay-native} Inside sendScore");
 
     final Bundle params = new Bundle();
     String leaderBoardID = "";
@@ -290,10 +293,10 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
         }
         params.putString(key, (String) o);
       }
+      mHelper.mGamesClient.submitScore(leaderBoardID, score);
     } catch(JSONException e) {
       logger.log("{gameplay-native} Error in Params of sendScore because "+ e.getMessage());
     }
-    mHelper.mGamesClient.submitScore(leaderBoardID, score);
   }
 
   public void logError(String errorDesc) {
