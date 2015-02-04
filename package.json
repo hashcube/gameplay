@@ -1,0 +1,13 @@
+{
+  "name": "gameplay",
+  "version": "0.1",
+  "devkit": {
+    "clientPaths": {
+      "gameplay": "js"
+    },
+    "extensions": {
+      "android": "android"
+    }
+  }
+}
+
