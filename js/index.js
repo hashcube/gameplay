@@ -16,10 +16,11 @@ function pluginOn(evt, next) {
 function invokeCallbacks(list) {
   // Pop off the first two arguments and keep the rest
   var args = Array.prototype.splice.call(arguments, 1),
+    length = list.length,
     i, item;
 
   // For each callback,
-  for (i = 0; i < list.length; ++i) {
+  for (i = 0; i < length; i++) {
     item = list[i];
 
     // If callback was actually specified,
