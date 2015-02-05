@@ -1,8 +1,6 @@
 <!--START_PLUGINS_MANIFEST-->
 <!--END_PLUGINS_MANIFEST-->
 <!--START_PLUGINS_APPLICATION-->
-<meta-data android:name="com.google.android.gms.games.APP_ID"
-        android:value="" />
-<meta-data android:name="com.google.android.gms.version"
-           android:value="@integer/google_play_services_version" />
+<meta-data android:name="com.google.android.gms.games.APP_ID" android:value="" />
+<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 <!--END_PLUGINS_APPLICATION-->
