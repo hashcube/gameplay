@@ -6,22 +6,18 @@ import util.setProperty as setProperty;
 /* jshint ignore:end */
 
 function pluginSend(evt, params) {
-  NATIVE && NATIVE.plugins && NATIVE.plugins.sendEvent &&
-    NATIVE.plugins.sendEvent('GamePlayPlugin', evt,
-      JSON.stringify(params || {}));
+  NATIVE.plugins.sendEvent('GamePlayPlugin', evt, JSON.stringify(params || {}));
 }
 
 function pluginOn(evt, next) {
-  NATIVE && NATIVE.events && NATIVE.events.registerHandler &&
-    NATIVE.events.registerHandler(evt, next);
+  NATIVE.events.registerHandler(evt, next);
 }
 
-function invokeCallbacks(list, clear) {
+function invokeCallbacks(list) {
   // Pop off the first two arguments and keep the rest
   var args = Array.prototype.slice.call(arguments),
     i, item;
 
-  args.shift();
   args.shift();
 
   // For each callback,
@@ -35,10 +31,7 @@ function invokeCallbacks(list, clear) {
     }
   }
 
-  // If asked to clear the list too,
-  if (clear) {
-    list.length = 0;
-  }
+  list.length = 0;
 }
 
 exports = new (Class(function () {
@@ -64,7 +57,7 @@ exports = new (Class(function () {
     pluginOn('gameplayLogin', function (evt) {
       logger.log('{gameplay} State updated:', evt.state);
 
-      invokeCallbacks(loginCB, true, evt.state === 'open', evt);
+      invokeCallbacks(loginCB, evt.state === 'open', evt);
     });
   };
 
