@@ -89,21 +89,13 @@ exports = new (Class(function () {
   };
 
   this.logout = function () {
-    var param = {
-      'connected_to': 'no'
-    };
     logger.log('{gameplay} Logging Out a user');
-    pluginSend('setLoginVariable', param);
     pluginSend('signOut');
   };
 
   this.login = function (next) {
-    var param = {
-      'connected_to': 'yes'
-    };
     logger.log('{gameplay} Logging in a user');
     loginCB.push(next);
-    pluginSend('setLoginVariable', param);
     pluginSend('beginUserInitiatedSignIn');
   };
 

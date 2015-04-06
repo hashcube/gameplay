@@ -50,7 +50,6 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 
   protected String mDebugTag = "BaseGameActivity";
   protected boolean mDebugLog = false;
-  public boolean logged_in = false;
 
   public class GPStateEvent extends com.tealeaf.event.Event {
     String state;
@@ -173,40 +172,6 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
     mHelper.signOut();
   }
 
-  public void setLoginVariable(String param) {
-    String connected_to = "";
-    logger.log("{gameplay-native} value of connected_to", connected_to);
-
-    final Bundle params = new Bundle();
-    logged_in = false;
-
-    try {
-      JSONObject ldrData = new JSONObject(param);
-      Iterator<?> keys = ldrData.keys();
-      while( keys.hasNext() ){
-        String key = (String)keys.next();
-        Object o = ldrData.get(key);
-        if(key.equals("connected_to")){
-          connected_to = (String) o;
-          continue;
-        }
-      }
-    } catch(JSONException e) {
-      logger.log("{gameplay-native} Error in Params of setLoginVariable"
-                 + " because "+ e.getMessage());
-    }
-    if(connected_to.equals("no"))
-    {
-      logged_in = false;
-      logger.log("{gameplay-native} logged_in : false");
-    }
-    else if(connected_to.equals("yes"))
-    {
-      logged_in = true;
-      logger.log("{gameplay-native} logged_in : true");
-    }
-  }
-
   protected void showAlert(String title, String message) {
     mHelper.showAlert(title, message);
   }
@@ -249,11 +214,6 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 
   public void sendAchievement(String param)
   {
-    if(logged_in)
-    {
-      mHelper.beginUserInitiatedSignIn(_context);
-    }
-
     if(!(mHelper.isSignedIn())){
       logger.log("{gameplay-native} not signed in");
       return;
@@ -288,11 +248,6 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 
   public void showLeaderBoard(String dummyParam)
   {
-    if(logged_in)
-    {
-      mHelper.beginUserInitiatedSignIn(_context);
-    }
-
     if(!(mHelper.isSignedIn())){
       logger.log("{gameplay-native} not signed in");
       return;
@@ -304,11 +259,6 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 
   public void showAchievements(String dummyParam)
   {
-    if(logged_in)
-    {
-      mHelper.beginUserInitiatedSignIn(_context);
-    }
-
     if(!(mHelper.isSignedIn())){
       logger.log("{gameplay-native} not signed in");
       return;
@@ -318,11 +268,6 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 
   public void sendScore(String param)
   {
-    if(logged_in)
-    {
-      mHelper.beginUserInitiatedSignIn(_context);
-    }
-
     if(!(mHelper.isSignedIn())){
       logger.log("{gameplay-native} not signed in");
       return;
