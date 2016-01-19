@@ -6,6 +6,7 @@
     "BaseGameUtils"
   ],
   "jars": [
+    "google_play_services_lib/libs/google-play-services.jar"
   ],
   "injectionXML": "manifest.xml",
   "injectionXSL": "manifest.xsl"
