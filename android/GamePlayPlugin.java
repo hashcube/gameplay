@@ -33,13 +33,13 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
   // The game helper object. This class is mainly a wrapper around this object.
   protected GameHelper mHelper;
 
-  // We expose these constants here because we don"t want users of this class
+  // We expose these constants here because we don't want users of this class
   // to have to know about GameHelper at all.
   public static final int CLIENT_GAMES = GameHelper.CLIENT_GAMES;
   public static final int CLIENT_PLUS = GameHelper.CLIENT_PLUS;
   public static final int CLIENT_ALL = GameHelper.CLIENT_ALL;
 
-  // Requested clients. By default, that"s just the games client.
+  // Requested clients. By default, that's just the games client.
   protected int mRequestedClients = CLIENT_GAMES;
 
   // stores any additional scopes.
@@ -259,13 +259,13 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
         }
         params.putString(key, (String) o);
       }
-    if (percentSolved == 100F) {
-        Games.Achievements.unlock(mGoogleApiClient, achievementID);
-    }
-    /*** else {
-      We should implement incremental achievements here
-      Games.Achievements.increment(mGoogleApiClient, "my_incremental_achievment_id", 1);
-    } ***/
+      if (percentSolved == 100F) {
+          Games.Achievements.unlock(mGoogleApiClient, achievementID);
+      }
+      /*** else {
+        We should implement incremental achievements here
+        Games.Achievements.increment(mGoogleApiClient, "my_incremental_achievment_id", 1);
+      } ***/
 
     } catch(JSONException e) {
       logger.log("{gameplay-native} Error in Params of sendAchievement because "+ e.getMessage());
