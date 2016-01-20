@@ -21,10 +21,11 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="16" />
+        android:minSdkVersion="10"
+        android:targetSdkVersion="23" />
 
-    <application android:allowBackup="true" android:label="BaseGameUtils" >
+    <application android:allowBackup="true" android:label="BaseGameUtils">
     </application>
+    <meta-data android:name="unityplayer.ForwardNativeEventsToDalvik" android:value="true" />
 
 </manifest>

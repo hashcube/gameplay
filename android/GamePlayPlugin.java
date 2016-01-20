@@ -1,10 +1,8 @@
 package com.tealeaf.plugin.plugins;
 
-import com.google.android.gms.appstate.AppStateClient;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.games.GamesClient;
-import com.google.android.gms.games.GamesClient.*;
-import com.google.android.gms.plus.PlusClient;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.example.games.basegameutils.*;
 
 import com.tealeaf.plugin.IPlugin;
@@ -38,7 +36,6 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
   // We expose these constants here because we don't want users of this class
   // to have to know about GameHelper at all.
   public static final int CLIENT_GAMES = GameHelper.CLIENT_GAMES;
-  public static final int CLIENT_APPSTATE = GameHelper.CLIENT_APPSTATE;
   public static final int CLIENT_PLUS = GameHelper.CLIENT_PLUS;
   public static final int CLIENT_ALL = GameHelper.CLIENT_ALL;
 
@@ -52,6 +49,7 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
   protected boolean mDebugLog = false;
   public boolean logged_in = false;
 
+  private GoogleApiClient mGoogleApiClient;
   public class GPStateEvent extends com.tealeaf.event.Event {
     String state;
 
@@ -61,9 +59,7 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
     }
   }
 
-  /** Constructs a BaseGameActivity with default client (GamesClient). */
   public GamePlayPlugin() {
-    mHelper = new GameHelper(_activity);
   }
 
   /**
@@ -97,14 +93,22 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 
   public void onCreate(Activity activity, Bundle savedInstanceState) {
     _activity = activity;
+    if (mHelper == null) {
+      mHelper = new GameHelper(_activity, CLIENT_GAMES);
+      mHelper.setup(this);
+    }
+    mGoogleApiClient = mHelper.getApiClient();
   }
 
   public void onResume() {
-    mHelper = new GameHelper(_activity);
-    if (mDebugLog) {
-      mHelper.enableDebugLog(mDebugLog, mDebugTag);
+    if (mHelper == null) {
+      mHelper = new GameHelper(_activity, CLIENT_GAMES);
+      mGoogleApiClient = mHelper.getApiClient();
+      if (mDebugLog) {
+        mHelper.enableDebugLog(mDebugLog, mDebugTag);
+      }
+      mHelper.setup(this);
     }
-    mHelper.setup(this, mRequestedClients, mAdditionalScopes);
   }
 
   public void onStart() {
@@ -149,24 +153,12 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
   public void onBackPressed() {
   }
 
-  protected GamesClient getGamesClient() {
-    return mHelper.getGamesClient();
-  }
-
-  protected AppStateClient getAppStateClient() {
-    return mHelper.getAppStateClient();
-  }
-
-  protected PlusClient getPlusClient() {
-    return mHelper.getPlusClient();
-  }
-
   protected boolean isSignedIn() {
     return mHelper.isSignedIn();
   }
 
   public void beginUserInitiatedSignIn(String dummyParam) {
-    mHelper.beginUserInitiatedSignIn(_context);
+    mHelper.beginUserInitiatedSignIn();
   }
 
   public void signOut(String dummyParam) {
@@ -205,11 +197,11 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
   }
 
   protected void showAlert(String title, String message) {
-    mHelper.showAlert(title, message);
+    mHelper.makeSimpleDialog(title, message);
   }
 
   protected void showAlert(String message) {
-    mHelper.showAlert(message);
+    mHelper.makeSimpleDialog(message);
   }
 
   protected void enableDebugLog(boolean enabled, String tag) {
@@ -224,16 +216,8 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
     return mHelper.getInvitationId();
   }
 
-  protected void reconnectClients(int whichClients) {
-    mHelper.reconnectClients(whichClients);
-  }
-
-  protected String getScopes() {
-    return mHelper.getScopes();
-  }
-
-  protected String[] getScopesArray() {
-    return mHelper.getScopesArray();
+  protected void reconnectClient() {
+    mHelper.reconnectClient();
   }
 
   protected boolean hasSignInError() {
@@ -246,7 +230,7 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
 
   public void sendAchievement(String param) {
     if(logged_in) {
-      mHelper.beginUserInitiatedSignIn(_context);
+      mHelper.beginUserInitiatedSignIn();
     }
 
     if(!(mHelper.isSignedIn())) {
@@ -275,7 +259,14 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
         }
         params.putString(key, (String) o);
       }
-      mHelper.mGamesClient.unlockAchievement(achievementID);
+      if (percentSolved == 100F) {
+          Games.Achievements.unlock(mGoogleApiClient, achievementID);
+      }
+      /*** else {
+        We should implement incremental achievements here
+        Games.Achievements.increment(mGoogleApiClient, "my_incremental_achievment_id", 1);
+      } ***/
+
     } catch(JSONException e) {
       logger.log("{gameplay-native} Error in Params of sendAchievement because "+ e.getMessage());
     }
@@ -284,7 +275,7 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
   public void showLeaderBoard(String dummyParam)
   {
     if(logged_in) {
-      mHelper.beginUserInitiatedSignIn(_context);
+      mHelper.beginUserInitiatedSignIn();
     }
 
     if(!(mHelper.isSignedIn())){
@@ -293,26 +284,26 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
     }
     //TODO: getlLeaderboardsIndent accepts id as parameter to show
     //a specific leaderboard.
-    _activity.startActivityForResult(mHelper.mGamesClient.getAllLeaderboardsIntent(), 1);
+    _activity.startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient), 1);
   }
 
   public void showAchievements(String dummyParam)
   {
     if(logged_in) {
-      mHelper.beginUserInitiatedSignIn(_context);
+      mHelper.beginUserInitiatedSignIn();
     }
 
     if(!(mHelper.isSignedIn())){
       logger.log("{gameplay-native} not signed in");
       return;
     }
-    _activity.startActivityForResult(mHelper.mGamesClient.getAchievementsIntent(), 1);
+    _activity.startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), 1);
   }
 
   public void sendScore(String param)
   {
     if(logged_in) {
-      mHelper.beginUserInitiatedSignIn(_context);
+      mHelper.beginUserInitiatedSignIn();
     }
 
     if(!(mHelper.isSignedIn())) {
@@ -326,7 +317,6 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
     try {
       JSONObject ldrData = new JSONObject(param);
       Iterator<?> keys = ldrData.keys();
-
       while( keys.hasNext() ){
         String key = (String)keys.next();
         Object o = ldrData.get(key);
@@ -340,7 +330,7 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
         }
         params.putString(key, (String) o);
       }
-      mHelper.mGamesClient.submitScore(leaderBoardID, score);
+      Games.Leaderboards.submitScore(mGoogleApiClient, leaderBoardID, score);
     } catch(JSONException e) {
       logger.log("{gameplay-native} Error in Params of sendScore because "+ e.getMessage());
     }
