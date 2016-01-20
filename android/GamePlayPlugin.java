@@ -96,22 +96,15 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
     if (mHelper == null) {
       mHelper = new GameHelper(_activity, CLIENT_GAMES);
       mHelper.setup(this);
+      mGoogleApiClient = mHelper.getApiClient();
     }
-    mGoogleApiClient = mHelper.getApiClient();
   }
 
   public void onResume() {
-    if (mHelper == null) {
-      mHelper = new GameHelper(_activity, CLIENT_GAMES);
-      mGoogleApiClient = mHelper.getApiClient();
-      if (mDebugLog) {
-        mHelper.enableDebugLog(mDebugLog, mDebugTag);
-      }
-      mHelper.setup(this);
-    }
   }
 
   public void onStart() {
+    mHelper.onStart(_activity);
   }
 
   public void onPause() {
