@@ -231,10 +231,9 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
       return;
     }
 
-    logger.log("{gameplay-native} Inside sendAchievement");
     final Bundle params = new Bundle();
     String achievementID = "";
-    Float percentSolved = 0F;
+    int increment = 0;
 
     try {
       JSONObject ldrData = new JSONObject(param);
@@ -246,19 +245,17 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
           achievementID = (String) o;
           continue;
         }
-        if(key.equals("percentSolved")) {
-          percentSolved = new Float(o.toString());
+        if(key.equals("increment")) {
+          increment = Integer.parseInt(o.toString());
           continue;
         }
         params.putString(key, (String) o);
       }
-      if (percentSolved == 100F) {
-          Games.Achievements.unlock(mGoogleApiClient, achievementID);
+      if (increment == 0) {
+        Games.Achievements.unlock(mGoogleApiClient, achievementID);
+      } else {
+        Games.Achievements.increment(mGoogleApiClient, achievementID, increment);
       }
-      /*** else {
-        We should implement incremental achievements here
-        Games.Achievements.increment(mGoogleApiClient, "my_incremental_achievment_id", 1);
-      } ***/
 
     } catch(JSONException e) {
       logger.log("{gameplay-native} Error in Params of sendAchievement because "+ e.getMessage());

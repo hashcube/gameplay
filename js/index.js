@@ -60,11 +60,11 @@ exports = new (Class(function () {
     });
   };
 
-  this.sendAchievement = function (achievementID, percentSolved) {
+  this.sendAchievement = function (achievementID, increment) {
     var param = {
-      'achievementID': achievementID,
-      'percentSolved': percentSolved
-    };
+        'achievementID': achievementID,
+        'increment': increment
+      };
 
     logger.log('{gameplay} Sending of achievement');
     pluginSend('sendAchievement', param);
