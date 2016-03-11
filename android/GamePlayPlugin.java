@@ -103,11 +103,20 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
   public void onResume() {
   }
 
+  public void onRenderResume() {
+  }
+
   public void onStart() {
     mHelper.onStart(_activity);
   }
 
+  public void onFirstRun() {
+  }
+
   public void onPause() {
+  }
+
+  public void onRenderPause() {
   }
 
   @Override
