@@ -277,6 +277,8 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
             builder.addScope(Plus.SCOPE_PLUS_LOGIN);
         }
 
+        builder.setViewForPopups(mActivity.findViewById(android.R.id.content));
+
         mGoogleApiClientBuilder = builder;
         return builder;
     }
