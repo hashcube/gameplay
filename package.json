@@ -1,6 +1,9 @@
 {
   "name": "gameplay",
   "version": "3.2.2",
+  "scripts": {
+    "postinstall": "sh ./postinstall.sh"
+  },
   "devkit": {
     "clientPaths": {
       "gameplay": "js"
