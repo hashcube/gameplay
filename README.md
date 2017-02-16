@@ -6,6 +6,7 @@ Right now we support only android.
 
 Features
   * Login/Logout
+  * PlayerStats
   * Leaderboard
   * Achievements
 
@@ -17,3 +18,8 @@ $ cd gameplay
 $ android update project -p android/google_play_services_lib/
 ```
 
+To register playerStats callback in game:
+```
+  import gameplay as gameplay;
+  gameplay.onPlayerStats = callbackFn;
+```
