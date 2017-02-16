@@ -35,7 +35,8 @@ function invokeCallbacks(list) {
 
 exports = new (Class(function () {
   var loginCB = [],
-    onSyncUpdate;
+    onSyncUpdate,
+    onPlayerStats;
 
   this.init = function () {
     logger.log('{gameplay} Registering for events on startup');
@@ -53,10 +54,32 @@ exports = new (Class(function () {
       }
     });
 
+    setProperty(this, 'onPlayerStats', {
+      set: function (f) {
+        // If a callback is being set,
+        if (typeof f === 'function') {
+          onPlayerStats = f;
+        } else {
+          onPlayerStats = null;
+        }
+      },
+      get: function () {
+        return onPlayerStats;
+      }
+    });
+
     pluginOn('gameplayLogin', function (evt) {
       logger.log('{gameplay} State updated:', evt.state);
 
       invokeCallbacks(loginCB, evt.state === 'open', evt);
+    });
+
+    NATIVE.events.registerHandler('playerStats', function (stats) {
+      if (typeof onPlayerStats === "function") {
+        onPlayerStats(stats);
+      } else {
+        logger.log('{gameplay} WARN: playerStats callback not registered');
+      }
     });
   };
 

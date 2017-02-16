@@ -1,8 +1,13 @@
 package com.tealeaf.plugin.plugins;
 
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.stats.Stats;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.games.stats.PlayerStats;
 import com.google.example.games.basegameutils.*;
 
 import com.tealeaf.plugin.IPlugin;
@@ -59,6 +64,60 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
     }
   }
 
+  public class PlayerStatsEvent extends com.tealeaf.event.Event {
+    float avgSessionLength;
+    float churnProbability;
+    int daysSinceLastPlayed;
+    float highSpenderProbablity;
+    int noOfPurchases;
+    int noOfSessions;
+    float sessionPercentile;
+    float spendPercentile;
+    float spendProbability;
+    float totalSpendNext28Days;
+
+    public PlayerStatsEvent(PlayerStats stats) {
+      super("playerStats");
+      this.avgSessionLength = stats.getAverageSessionLength();
+      this.churnProbability = stats.getChurnProbability();
+      this.daysSinceLastPlayed = stats.getDaysSinceLastPlayed();
+      this.highSpenderProbablity = stats.getHighSpenderProbability();
+      this.noOfPurchases = stats.getNumberOfPurchases();
+      this.noOfSessions = stats.getNumberOfSessions();
+      this.sessionPercentile = stats.getSessionPercentile();
+      this.spendPercentile = stats.getSpendPercentile();
+      this.spendProbability = stats.getSpendProbability();
+      this.totalSpendNext28Days = stats.getTotalSpendNext28Days();
+    }
+  }
+
+  private void checkPlayerStats() {
+    PendingResult<Stats.LoadPlayerStatsResult> result;
+
+    if(mHelper == null || !mHelper.isSignedIn()) {
+      logger.log("{gameplay-native} not signed in");
+      return;
+    }
+
+    result = Games.Stats.loadPlayerStats(
+      mGoogleApiClient, false /* forceReload */);
+
+    result.setResultCallback(new ResultCallback<Stats.LoadPlayerStatsResult>() {
+      public void onResult(Stats.LoadPlayerStatsResult result) {
+        Status status = result.getStatus();
+        if (status.isSuccess()) {
+          PlayerStats stats = result.getPlayerStats();
+          if (stats != null) {
+            logger.log("{gameplay-native} Player stats loaded!!");
+            EventQueue.pushEvent(new PlayerStatsEvent(stats));
+          }
+        } else {
+          logger.log("{gameplay-native} Failed to fetch playerStats: " + status.getStatusMessage());
+        }
+      }
+    });
+  }
+
   public GamePlayPlugin() {
   }
 
@@ -101,6 +160,7 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
   }
 
   public void onResume() {
+    checkPlayerStats();
   }
 
   public void onRenderResume() {
@@ -129,6 +189,7 @@ public class GamePlayPlugin implements IPlugin, GameHelper.GameHelperListener {
   public void onSignInSucceeded(){
     // show sign-out button, hide the sign-in button
     EventQueue.pushEvent(new GPStateEvent("open"));
+    checkPlayerStats();
   }
 
   public void onStop() {
