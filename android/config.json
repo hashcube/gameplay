@@ -3,7 +3,8 @@
     "GamePlayPlugin.java"
   ],
   "jars": [
-    "BaseGameUtils/basegameutils/build/outputs/aar/basegameutils-debug.aar"
+    "BaseGameUtils/basegameutils/build/outputs/aar/basegameutils-debug.aar",
+    "BaseGameUtils/google_play_services_lib/build/outputs/aar/google_play_services_lib-debug.aar"
   ],
   "injectionXML": "manifest.xml",
   "injectionXSL": "manifest.xsl"
