@@ -2,10 +2,8 @@
   "copyFiles": [
     "GamePlayPlugin.java"
   ],
-  "libraries": [
-    "BaseGameUtils"
-  ],
   "jars": [
+    "BaseGameUtils/basegameutils/build/outputs/aar/basegameutils-debug.aar"
   ],
   "injectionXML": "manifest.xml",
   "injectionXSL": "manifest.xsl"
