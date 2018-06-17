@@ -24,7 +24,7 @@ android/BaseGameUtils/basegameutils/build/outputs/*
 
 !android/BaseGameUtils/google_play_services_lib/build
 android/BaseGameUtils/google_play_services_lib/build/*
-!android/BaseGameUtils/google_play_services_lib/buildg/outputs
+!android/BaseGameUtils/google_play_services_lib/build/outputs
 android/BaseGameUtils/google_play_services_libs/build/outputs/*
 !android/BaseGameUtils/google_play_services_lib/build/outputs/aar/
 
