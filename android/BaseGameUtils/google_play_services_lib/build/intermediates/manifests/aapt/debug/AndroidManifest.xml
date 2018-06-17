@@ -18,8 +18,8 @@
     package="com.google.android.gms" >
 
     <uses-sdk
-        android:minSdkVersion="9"
-        android:targetSdkVersion="9" />
+        android:minSdkVersion="21"
+        android:targetSdkVersion="23" />
 
     <application>
         <meta-data
