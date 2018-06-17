@@ -7,32 +7,35 @@ The following files were *not* copied into the new Gradle project; you
 should evaluate whether these are still needed in your project and if
 so manually move them:
 
+From BaseGameUtils:
 * build.xml
 * proguard-project.txt
-
-Replaced Libraries with Dependencies:
--------------------------------------
-The importer recognized the following library projects as third party
-libraries and replaced them with Gradle dependencies instead. This has
-the advantage that more explicit version information is known, and the
-libraries can be updated automatically. However, it is possible that
-the source files in your project were of an older version than the
-dependency we picked, which could render the project not compileable.
-You can disable the library replacement in the import wizard and try
-again:
-
-google_play_services_lib => [com.google.android.gms:play-services:+]
+From google_play_services_lib:
+* R.txt
+* build.xml
+* proguard-project.txt
+* proguard.txt
 
 Moved Files:
 ------------
 Android Gradle projects use a different directory structure than ADT
 Eclipse projects. Here's how the projects were restructured:
 
-* AndroidManifest.xml => app/src/main/AndroidManifest.xml
-* libs/arch-libs.jar => app/libs/arch-libs.jar
-* libs/support-v4.jar => app/libs/support-v4.jar
-* res/ => app/src/main/res/
-* src/ => app/src/main/java/
+In google_play_services_lib:
+* AndroidManifest.xml => google_play_services_lib/src/main/AndroidManifest.xml
+* libs/google-base.jar => google_play_services_lib/libs/google-base.jar
+* libs/google-basement.jar => google_play_services_lib/libs/google-basement.jar
+* libs/google-games.jar => google_play_services_lib/libs/google-games.jar
+* libs/google-plus.jar => google_play_services_lib/libs/google-plus.jar
+* res/ => google_play_services_lib/src/main/res/
+* src/ => google_play_services_lib/src/main/java
+* src/.gitkeep => google_play_services_lib/src/main/resources/.gitkeep
+In BaseGameUtils:
+* AndroidManifest.xml => baseGameUtils/src/main/AndroidManifest.xml
+* libs/arch-libs.jar => baseGameUtils/libs/arch-libs.jar
+* libs/support-v4.jar => baseGameUtils/libs/support-v4.jar
+* res/ => baseGameUtils/src/main/res/
+* src/ => baseGameUtils/src/main/java/
 
 Next Steps:
 -----------

@@ -1,1 +1,2 @@
+include ':google_play_services_lib'
 include ':basegameutils'
