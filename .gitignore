@@ -16,16 +16,7 @@ android/BaseGameUtils/captures
 android/BaseGameUtils/.idea
 .DS_Store
 android/BaseGameUtils/DS_Store
-!android/BaseGameUtils/basegameutils/build
-android/BaseGameUtils/basegameutils/build/**
-!android/BaseGameUtils/basegameutils/build/outputs
-android/BaseGameUtils/basegameutils/build/outputs/**
-!android/BaseGameUtils/basegameutils/build/outputs/aar/
 
-!android/BaseGameUtils/google_play_services_lib/build
-android/BaseGameUtils/google_play_services_lib/build/**
-!android/BaseGameUtils/google_play_services_lib/build/outputs
-android/BaseGameUtils/google_play_services_libs/build/outputs/**
-!android/BaseGameUtils/google_play_services_lib/build/outputs/aar/
-
-android/BaseGameUtils/build/android-profile
+**/build
+!android/BaseGameUtils/basegameutils/build/outputs/aar/basegameutils-debug.aar
+!android/BaseGameUtils/google_play_services_lib/build/outputs/aar/google_play_services_lib-debug.aar
