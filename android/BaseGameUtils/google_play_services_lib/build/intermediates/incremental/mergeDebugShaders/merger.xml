@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/alex/codeworks/YG/reposAndroid/devkitworks/plugins/ant/gameplay/android/BaseGameUtils/google_play_services_lib/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/Users/alex/codeworks/YG/reposAndroid/devkitworks/plugins/ant/gameplay/android/BaseGameUtils/google_play_services_lib/src/debug/shaders"/></dataSet></merger>
