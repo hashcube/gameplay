@@ -19,8 +19,8 @@ android {
 }
 
 dependencies {
-    implementation files('libs/google-base.jar')
-    implementation files('libs/google-basement.jar')
-    implementation files('libs/google-games.jar')
-    implementation files('libs/google-plus.jar')
+    api files('libs/google-base.jar')
+    api files('libs/google-basement.jar')
+    api files('libs/google-games.jar')
+    api files('libs/google-plus.jar')
 }
