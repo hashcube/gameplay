@@ -27,3 +27,9 @@ To register playerStats callback in game:
 ```
 
 Note: basement lib we are using in utils module also. if you are using utils module, if we updating basement lib, update utils also with the same
+
+
+// New how to add google play services
+https://console.firebase.google.com/project/hashcubetestplayservices/overview
+
+requires google play services configuration to be registered on game project package
