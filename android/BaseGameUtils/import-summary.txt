@@ -1,0 +1,53 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+From BaseGameUtils:
+* build.xml
+* proguard-project.txt
+From google_play_services_lib:
+* R.txt
+* build.xml
+* proguard-project.txt
+* proguard.txt
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+In google_play_services_lib:
+* AndroidManifest.xml => google_play_services_lib/src/main/AndroidManifest.xml
+* libs/google-base.jar => google_play_services_lib/libs/google-base.jar
+* libs/google-basement.jar => google_play_services_lib/libs/google-basement.jar
+* libs/google-games.jar => google_play_services_lib/libs/google-games.jar
+* libs/google-plus.jar => google_play_services_lib/libs/google-plus.jar
+* res/ => google_play_services_lib/src/main/res/
+* src/ => google_play_services_lib/src/main/java
+* src/.gitkeep => google_play_services_lib/src/main/resources/.gitkeep
+In BaseGameUtils:
+* AndroidManifest.xml => baseGameUtils/src/main/AndroidManifest.xml
+* libs/arch-libs.jar => baseGameUtils/libs/arch-libs.jar
+* libs/support-v4.jar => baseGameUtils/libs/support-v4.jar
+* res/ => baseGameUtils/src/main/res/
+* src/ => baseGameUtils/src/main/java/
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
