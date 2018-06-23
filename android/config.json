@@ -6,5 +6,11 @@
   "injectionXSL": "manifest.xsl",
   "injectionTealeafModuleGradleXML": "gradletealeaf.xml",
   "injectionAppModuleGradleAndroidPluginsGradleXML": "gradlepluginsapp.xml",
-  "injectionGradleClasspathXML": "gradleclasspath.xml"
+  "injectionGradleClasspathXML": "gradleclasspath.xml",
+  "copyCustomFiles": [
+   {
+    "file": "google-services.json",
+    "path": "app"
+    }
+  ]
 }
