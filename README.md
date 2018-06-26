@@ -31,8 +31,13 @@ Note: basement lib we are using in utils module also. if you are using utils mod
 ## Android installation
 Requires google play services configuration to be registered on game project package
 
+
+Now for every game, after devkit init game, you can check the package name of your android project in devkit/YOURGAME/modules/devkit-core/modules/native-android/gradleops/YOURGAME/app/build.gradle file, line 7, applicationId variable
+
+then to FCM console and create the project for the package of the game you have created and obtain google-services.json file right after FCM project creation in console.
+
+
 https://firebase.google.com/docs/android/setup
 
-After plugins install completed (dekit install),  follow this  [url](https://firebase.google.com/docs/android/setup and obtain google-services.json) and obtain google-services.json file for your application using package "yourdomain.yourstudio.yourgamename", then put it into yourgamename/modules/gameplay/android/ directory
-
+Then put google-services.json file into devkit/YOURGAME/modules/gameplay/android/
 
