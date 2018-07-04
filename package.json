@@ -6,8 +6,11 @@
       "gameplay": "js"
     },
     "extensions": {
+      "build": "build",
       "android": "android"
     }
+  },
+    "dependencies": {
+    "fs-extra": "^1.0.0"
   }
 }
-
