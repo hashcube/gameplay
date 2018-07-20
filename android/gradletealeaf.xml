@@ -5,3 +5,7 @@
     implementation 'com.google.android.gms:play-services-games:15.0.1'
     implementation 'com.google.android.gms:play-services-basement:15.0.1'
 //<!--END_PLUGINS_DEPENDENCIES-->
+//<!--START_ANDROID_PLUGINS_CUSTOM_SETTINGS-->
+//<!--DEVKIT Gameplay plugin dependency compatibility with other dependencies Plugin-->
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
+//<!--END_ANDROID_PLUGINS_CUSTOM_SETTINGS-->
