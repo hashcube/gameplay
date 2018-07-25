@@ -1,0 +1,5 @@
+//<!--START_GOOGLE_PLAY_PLUGINS_CLASSPATH-->
+	//<!--Android Google Play Plugin for Devkit GamePlay Plugin-->
+    classpath 'com.google.gms:google-services:4.0.1'
+//<!--END_GOOGLE_PLAY_PLUGINS_CLASSPATH-->
+

@@ -19,7 +19,6 @@
 #   public *;
 #}
 
-
 -dontobfuscate
 -dontshrink
 -dontoptimize
@@ -27,6 +26,3 @@
 -keep public class * {
     public protected *;
 }
-
-
-

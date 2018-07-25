@@ -1,16 +1,16 @@
 {
   "name": "gameplay",
   "version": "3.2.14",
-  "scripts": {
-    "postinstall": "sh ./postinstall.sh"
-  },
   "devkit": {
     "clientPaths": {
       "gameplay": "js"
     },
     "extensions": {
+      "build": "build",
       "android": "android"
     }
+  },
+    "dependencies": {
+    "fs-extra": "^1.0.0"
   }
 }
-

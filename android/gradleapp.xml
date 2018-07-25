@@ -1,0 +1,5 @@
+//<!--START_ANDROID_PLUGINS-->
+	//<!--Android Google Play Plugin for Devkit GamePlay Plugin-->
+   apply plugin: 'com.google.gms.google-services'
+//<!--END_ANDROID_PLUGINS-->
+
