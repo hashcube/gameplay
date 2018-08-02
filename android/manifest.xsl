@@ -9,7 +9,7 @@
   <xsl:template match="comment()" />
 
   <xsl:template match="meta-data[@android:name='com.google.android.gms.games.APP_ID']">
-    <meta-data android:name="com.google.android.gms.games.APP_ID" android:value="\ {$gameplayID}" />
+    <meta-data android:name="com.google.android.gms.games.APP_ID" android:value="\{$gameplayID}" />
   </xsl:template>
 
   <xsl:template match="@*|node()">
