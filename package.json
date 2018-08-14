@@ -10,7 +10,7 @@
       "android": "android"
     }
   },
-    "dependencies": {
+  "dependencies": {
     "fs-extra": "^1.0.0"
   }
 }
