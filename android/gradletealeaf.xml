@@ -1,7 +1,6 @@
 //<!--START_PLUGINS_DEPENDENCIES-->
 	//<!--GamePlay Dependencies-->
     implementation 'com.google.android.gms:play-services-base:15.0.1'
-    implementation 'com.google.android.gms:play-services-plus:15.0.1'
     implementation 'com.google.android.gms:play-services-games:15.0.1'
     implementation 'com.google.android.gms:play-services-basement:15.0.1'
 //<!--END_PLUGINS_DEPENDENCIES-->
