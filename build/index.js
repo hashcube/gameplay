@@ -9,8 +9,9 @@ exports.onCreateProject = function (api, app, config, cb) {
   } else if (config.target == 'native-android') {
     // copy google-services.json from manifest config string `google_services_file`
     var googleServicesJsonFile = path.join(app_path, app.manifest.android.google_services_file);
-    return fs.copyAsync(googleServicesJsonFile,
+   fs.copySync(googleServicesJsonFile,
     path.join(config.outputPath, app.manifest.shortName, "app", "google-services.json"));
+    return Promise.resolve(true);
   }
-  return Promise.resolve(true);
+
 }
