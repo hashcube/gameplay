@@ -1,6 +1,6 @@
 {
   "name": "gameplay",
-  "version": "3.2.16",
+  "version": "3.2.17",
   "devkit": {
     "clientPaths": {
       "gameplay": "js"
